@@ -1,0 +1,41 @@
+@startuml booking with cart
+
+actor Customer
+participant FE
+participant CartService
+participant SeatService
+participant BookingService
+participant PaymentService
+database DB
+
+Customer -> FE : Select Seats
+FE -> CartService : addToCart(user, seats)
+
+CartService -> SeatService : lockSeats(seats)
+SeatService -> DB : create SeatLock (TTL)
+
+SeatService --> CartService : OK
+CartService --> FE : added to cart
+
+Customer -> FE : Checkout
+FE -> BookingService : createBooking(cart_id)
+
+BookingService -> DB : create Booking (PENDING)
+BookingService -> DB : convert CartItem → BookingSeat
+
+BookingService --> FE : booking created
+
+Customer -> FE : Pay
+FE -> PaymentService : pay(booking_id)
+
+PaymentService -> DB : create Payment
+
+alt Success
+    PaymentService -> BookingService : confirmBooking
+    BookingService -> DB : update Booking → CONFIRMED
+    BookingService -> SeatService : finalize seats
+else Failed
+    PaymentService -> BookingService : cancelBooking
+end
+
+@enduml

@@ -1,0 +1,74 @@
+@startuml MovieTicketSystem_Architecture
+
+!define RECTANGLE class
+
+actor User
+
+node "Client Layer" {
+  component "Web App / Mobile App" as Client
+}
+
+node "Load Balancer" {
+  component "Nginx / Cloud LB" as LB
+}
+
+node "Backend (Modular Monolith - FastAPI)" {
+
+  package "API Layer" {
+    component "REST Controllers" as API
+  }
+
+  package "Application Layer (Services)" {
+    component "Auth Service"
+    component "Movie Service"
+    component "Show Service"
+    component "Cart Service"
+    component "Seat Service"
+    component "Booking Service"
+    component "Payment Service"
+  }
+
+  package "Domain Layer" {
+    component "Entities (User, Movie, Show, Booking, etc.)"
+  }
+
+  package "Infrastructure Layer" {
+    component "Repositories"
+  }
+}
+
+node "Cache Layer" {
+  component "Redis (Seat Lock, TTL)" as Redis
+}
+
+node "Database Layer" {
+  database "PostgreSQL" as DB
+}
+
+' Connections
+User --> Client
+Client --> LB
+LB --> API
+
+API --> "Auth Service"
+API --> "Movie Service"
+API --> "Show Service"
+API --> "Cart Service"
+API --> "Booking Service"
+API --> "Payment Service"
+
+"Cart Service" --> "Seat Service"
+"Booking Service" --> "Seat Service"
+"Payment Service" --> "Booking Service"
+
+"Seat Service" --> Redis
+
+"Booking Service" --> DB
+"Cart Service" --> DB
+"Movie Service" --> DB
+"Show Service" --> DB
+"Auth Service" --> DB
+
+Repositories --> DB
+
+@enduml

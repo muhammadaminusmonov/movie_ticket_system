@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: movie_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:15
+    container_name: movie_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: movie_db
+    ports:
+      - "5433:5432"
+
+  redis:
+    image: redis:7
+    container_name: movie_redis
+    ports:
+      - "6379:6379"

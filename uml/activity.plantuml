@@ -1,0 +1,37 @@
+@startuml
+
+start
+
+:Browse Movies;
+:Select Show;
+:Select Seats;
+
+:Lock Seats (SeatLock with TTL);
+
+if (Lock Success?) then (Yes)
+
+    :Add to Cart;
+
+    :Proceed to Checkout;
+
+    :Create Booking (PENDING);
+
+    :Initiate Payment;
+
+    if (Payment Success?) then (Yes)
+        :Confirm Booking;
+        stop
+    else (No)
+        :Cancel Booking;
+        :Release Seats;
+        stop
+    endif
+
+else (No)
+
+    :Show Error (Seats Locked);
+    :Retry;
+
+endif
+
+@enduml

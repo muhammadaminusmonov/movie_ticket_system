@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+
+actor Customer
+actor "Cinema Owner" as Owner
+actor "Super Admin" as Admin
+
+rectangle "Movie Ticket System" {
+
+  ' Customer Use Cases
+  Customer -- (Browse Movies)
+  Customer -- (View Showtimes)
+  Customer -- (Select Seats)
+  Customer -- (Add to Cart)
+  Customer -- (Confirm Booking)
+  Customer -- (Cancel Booking)
+  Customer -- (View Booking History)
+
+  ' Cinema Owner Use Cases
+  Owner -- (Add Movie)
+  Owner -- (Edit Movie)
+  Owner -- (Schedule Show)
+  Owner -- (Manage Screens)
+  Owner -- (Configure Seats)
+  Owner -- (View Bookings)
+
+  ' Super Admin Use Cases
+  Admin -- (Manage Cinemas)
+  Admin -- (Manage Cinema Owners)
+}
+
+@enduml

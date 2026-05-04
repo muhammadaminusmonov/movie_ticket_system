@@ -1,0 +1,115 @@
+@startuml movie ticket v2
+
+class User {
+name: string
+email: string
+password_hash: string
+role: enum (CUSTOMER, OWNER, ADMIN)
+created_at: datetime
+}
+
+class Cinema {
+id: UUID
+name: string
+location: string
+owner_id: UUID
+}
+
+class Screen {
+id: UUID
+name: string
+cinema_id: UUID
+}
+
+class Seat {
+id: UUID
+screen_id: UUID
+row: string
+number: int
+type: enum (STANDARD, VIP)
+}
+
+class Movie {
+id: UUID
+title: string
+duration_minutes: int
+}
+
+class Show {
+id: UUID
+movie_id: UUID
+screen_id: UUID
+start_time: datetime
+end_time: datetime
+price: decimal
+}
+
+' NEW
+class Cart {
+id: UUID
+user_id: UUID
+status: enum (ACTIVE, EXPIRED, CHECKED_OUT)
+created_at: datetime
+}
+
+class CartItem {
+id: UUID
+cart_id: UUID
+seat_id: UUID
+show_id: UUID
+price: decimal
+}
+
+class SeatLock {
+id: UUID
+seat_id: UUID
+show_id: UUID
+locked_until: datetime
+user_id: UUID
+}
+
+class Booking {
+id: UUID
+user_id: UUID
+show_id: UUID
+status: enum (PENDING, CONFIRMED, CANCELLED)
+total_price: decimal
+}
+
+class Payment {
+id: UUID
+booking_id: UUID
+amount: decimal
+status: enum (INITIATED, SUCCESS, FAILED)
+method: string
+}
+
+class BookingSeat {
+id: UUID
+booking_id: UUID
+seat_id: UUID
+show_id: UUID
+price: decimal
+}
+
+' Relationships
+Cinema "1" -- "many" Screen
+Screen "1" -- "many" Seat
+Screen "1" -- "many" Show
+Movie "1" -- "many" Show
+
+User "1" -- "1" Cart
+Cart "1" -- "many" CartItem
+
+Seat "1" -- "many" CartItem
+Show "1" -- "many" CartItem
+
+Seat "1" -- "many" SeatLock
+Show "1" -- "many" SeatLock
+
+User "1" -- "many" Booking
+Booking "1" -- "many" BookingSeat
+
+Booking "1" -- "1" Payment
+
+@enduml
