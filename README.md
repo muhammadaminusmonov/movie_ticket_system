@@ -1,11 +1,3 @@
-## 🤝 Contributing
-
-Contributions are welcome! If you'd like to improve this project, please fork the repository and submit a pull request.
-
-## 📄 License
-
-This project is licensedThis is a template `README.md` file tailored for a Movie Ticket Booking System project. You can copy the content below and adjust the bracketed placeholders `[ ]` to match your specific tech stack, features, and setup instructions.
-
 ***
 
 # 🎬 Movie Ticket Booking System
@@ -420,18 +412,3 @@ Before you begin, ensure you have the following installed on your machine:
     cd client
     npm start
     ```
-
-## 🤝 Contributing
-
-Contributions are welcome! If you'd like to improve this project, please fork the repository and submit a pull request.
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
-***
-
-### Tips for your README:
-*   **Screenshots:** Add a section called "Previews" and include screenshots of your login page, booking dashboard, and seat selection screen. Users love to see the UI.
-*   **API Docs:** If you have a backend, mention if you are using Swagger or provide a small example of an endpoint.
-*   **Maintainer Contact:** Replace the repository link in the clone command if you ever move the repo, and feel free to add your own name/contact info at the bottom.
