@@ -1,19 +1,3 @@
-PORT=5000
-    MONGO_URI=your_mongodb_connection_string
-    JWT_SECRET=your_secret_key
-    ```
-
-4.  **Run the application:**
-    ```bash
-    # Start the server
-    cd server
-    npm run dev
-
-    # Start the client (in a new terminal)
-    cd client
-    npm start
-    ```
-
 ## 🤝 Contributing
 
 Contributions are welcome! If you'd like to improve this project, please fork the repository and submit a pull request.
